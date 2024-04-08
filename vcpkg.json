@@ -1,0 +1,8 @@
+{
+    "name": "project-dependencies",
+    "version-string": "11",
+    "description": "Dependencies for project",
+    "dependencies": [
+        "mbedtls"
+    ]
+}
