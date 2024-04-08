@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+env:
+  VCPKG_COMMIT_HASH: 11ed79186fe850bd3a98cfbf1854514d2b3070a2
+jobs:
+  macos-build:
+    name: macOS
+    runs-on: macos-latest
+    if: always()
+    steps:
+      # needed for vcpkg.json
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: lukka/get-cmake@latest
+      - name: Install vcpkg and packages
+        uses: lukka/run-vcpkg@v11
+        id: runvcpkg
+        env:
+          VCPKG_DEFAULT_TRIPLET: x64-osx-dynamic
+        with:
+          vcpkgGitCommitId: '${{ env.VCPKG_COMMIT_HASH }}'
+          runVcpkgInstall: true
+      - name: Check output
+        run: |
+          find . -name 'libmbedtls.*'
